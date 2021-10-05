@@ -134,7 +134,7 @@ public class DataUtils {
                     String fileExt = fileName.substring(fileName.lastIndexOf("."), fileName.length());
                     //先暂存源目录和目标目录
                     source[0] = file.toPath();
-                    target[0] = new File("resources/img/" + dish.getId() + fileExt).getAbsoluteFile().toPath();
+                    target[0] = new File("resources/img/" + dish.getId() + fileExt).toPath();
 
                     //更新显示图片
                     image[0].setIcon(Dish.imgToIcon(source[0].toString()));
