@@ -5,8 +5,6 @@ import FUCK.Model.Dish;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -31,7 +29,7 @@ public class DataUtils {
 
     private void updateNumOfDishes() {
         try {
-            String sql = "SELECT COUNT(ID) FROM DISHES;";
+            String sql = String.format("SELECT COUNT(ID) FROM DISHES;");
             ps = sqLiteUtils.getStatement(sql);
             rs = ps.executeQuery();
             numOfDishes = rs.getInt("COUNT(ID)");
@@ -40,10 +38,19 @@ public class DataUtils {
         } finally {
             sqLiteUtils.close();
         }
+    }
 
-        //测试区
-        File file = new File(".");
-        System.out.println(file.getAbsolutePath());
+    private void updateNumOfDishes(String word) {
+        try {
+            String sql = String.format("SELECT COUNT(ID) FROM DISHES WHERE NAME GLOB '*%s*' OR CLASS GLOB '*%s*';", word, word);
+            ps = sqLiteUtils.getStatement(sql);
+            rs = ps.executeQuery();
+            numOfDishes = rs.getInt("COUNT(ID)");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            sqLiteUtils.close();
+        }
     }
 
     public void updateSQLDish(int id, String name, double price, String classification, String url) {
@@ -59,10 +66,18 @@ public class DataUtils {
         }
     }
 
-    public Dish[] initDishes() {
+    public Dish[] showDishes(String word) {
+        if(word.equals(""))
+            updateNumOfDishes();
+        else
+            updateNumOfDishes(word);
         Dish[] result = new Dish[numOfDishes];
         try {
-            String sql = "SELECT * FROM DISHES;";
+            String sql;
+            if (word.equals(""))
+                sql="SELECT * FROM DISHES;";
+            else
+                sql=String.format("SELECT * FROM DISHES WHERE NAME GLOB '*%s*' OR CLASS GLOB '*%s*';", word, word);
             ps = sqLiteUtils.getStatement(sql);
             rs = ps.executeQuery();
             for (int i = 0; i < numOfDishes; i++) {
@@ -174,37 +189,29 @@ public class DataUtils {
         JButton sava = new JButton("保存");
         JButton cancel = new JButton("取消");
 
-        sava.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //更新数据库
-                updateSQLDish(dish.getId(), nameField.getText(), Double.valueOf(priceField.getText()),
-                        classificationField.getText(), target[0].toString());
+        sava.addActionListener(e -> {
+            //更新数据库
+            updateSQLDish(dish.getId(), nameField.getText(), Double.parseDouble(priceField.getText()),
+                    classificationField.getText(), target[0].toString());
 
-                if (isUpdateImg[0])
-                //把文件复制到程序所在的文件夹
-                {
-                    try {
-                        Files.copy(source[0], target[0], StandardCopyOption.REPLACE_EXISTING);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+            if (isUpdateImg[0])
+            //把文件复制到程序所在的文件夹
+            {
+                try {
+                    Files.copy(source[0], target[0], StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-
-                //更新内存
-                Dish.updateDies(dish, nameField.getText(), Double.valueOf(priceField.getText()),
-                        classificationField.getText(), target[0].toString());
-
-                dialog.dispose();
             }
+
+            //更新内存
+            Dish.updateDies(dish, nameField.getText(), Double.parseDouble(priceField.getText()),
+                    classificationField.getText(), target[0].toString());
+
+            dialog.dispose();
         });
 
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
+        cancel.addActionListener(e -> dialog.dispose());
 
         bottomPanel.add(sava);
         bottomPanel.add(cancel);
@@ -222,6 +229,6 @@ public class DataUtils {
 
     public static void main(String... a) {
         var t = new DataUtils();
-        t.initDishes();
+        t.showDishes("");
     }
 }
