@@ -1,4 +1,4 @@
-package FUCK;
+package FUCK.JDBC;
 
 import java.sql.*;
 
@@ -76,5 +76,4 @@ public class SQLiteUtils {
     public static void main(String... a) {
         SQLiteUtils s = new SQLiteUtils();
     }
-
 }

@@ -1,10 +1,12 @@
 package FUCK.Client;
 
-import FUCK.DataUtils;
+import FUCK.JDBC.DataUtils;
 import FUCK.Model.Dish;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,28 +23,37 @@ public class DishesPanelUtils {
         JLabel[] name = new JLabel[num];
         JLabel[] price = new JLabel[num];
         JLabel[] classification = new JLabel[num];
+        JButton[] delete = new JButton[num];
 
         for (int i = 0; i < num; i++) {
             System.out.println(dishes[i].getName());
-            dishPanel[i] = new JPanel(new FlowLayout(FlowLayout.LEFT, 50, 10));
+            dishPanel[i] = new JPanel(new FlowLayout(FlowLayout.LEFT, 60, 5));
             //ids[i] = new JLabel(String.valueOf(dishes[i].getId()));
             images[i] = new JLabel(dishes[i].getImageIcon());
             name[i] = new JLabel(dishes[i].getName());
             price[i] = new JLabel("¥ " + dishes[i].getPrice());
             classification[i] = new JLabel(dishes[i].getClassification());
+            delete[i]=new JButton("删除");
+            delete[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
 
             dishPanel[i].add(images[i]);
             //dishPanel[i].add(ids[i]);
             dishPanel[i].add(name[i]);
             dishPanel[i].add(price[i]);
             dishPanel[i].add(classification[i]);
+            dishPanel[i].add(delete[i]);
 
             int finalI = i;
             dishPanel[i].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    data.updateDish(dishes[finalI],
+                    DataUtils.updateDish(dishes[finalI],
                             (JFrame) dishPanel[finalI].getRootPane().getParent(),
                             dishPanel[finalI]);
                     //重绘面板

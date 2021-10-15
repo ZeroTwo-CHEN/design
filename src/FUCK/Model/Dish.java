@@ -1,11 +1,7 @@
 package FUCK.Model;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Dish {
     private int id;
@@ -49,16 +45,17 @@ public class Dish {
     }
 
     public static ImageIcon imgToIcon(String url) {
-        BufferedImage img = null;
-        try {
-            if (!url.equals(""))
-                img = ImageIO.read(new File(url));
-            else
-                img = ImageIO.read(new File("resources/img/default.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ImageIcon icon = new ImageIcon(img);
+        //在使用了Buffer后出现读图错误的情况，暂时注释掉
+//        BufferedImage img = null;
+//        try {
+//            if (!url.equals(""))
+//                img = ImageIO.read(new File(url));
+//            else
+//                img = ImageIO.read(new File("resources/img/default.jpg"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        ImageIcon icon = new ImageIcon(url);
         icon.setImage(icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
         return icon;
     }
@@ -68,16 +65,6 @@ public class Dish {
         dish.name = name;
         dish.price = price;
         dish.classification = classification;
-        BufferedImage img = null;
-        try {
-            if (!url.equals(""))
-                img = ImageIO.read(new File(url));
-            else
-                img = ImageIO.read(new File("resources/img/default.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        dish.icon = new ImageIcon(img);
-        dish.icon.setImage(dish.icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        dish.icon = imgToIcon(url);
     }
 }

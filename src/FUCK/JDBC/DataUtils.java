@@ -1,4 +1,4 @@
-package FUCK;
+package FUCK.JDBC;
 
 import FUCK.Model.Dish;
 
@@ -17,8 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DataUtils {
-    private SQLiteUtils sqLiteUtils;
-    private PreparedStatement ps;
+    private static SQLiteUtils sqLiteUtils;
+    private static PreparedStatement ps;
     private ResultSet rs;
     private int numOfDishes;
 
@@ -53,7 +53,19 @@ public class DataUtils {
         }
     }
 
-    public void updateSQLDish(int id, String name, double price, String classification, String url) {
+    public static void addDish(String name, double price, String classification, String url){
+        String sql = String.format("INSERT INTO DISHES (NAME,PRICE,CLASS,URL) VALUES ('%s',%f,'%s','%s')", name, price, classification, url);
+        try {
+            ps = sqLiteUtils.getStatement(sql);
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            sqLiteUtils.close();
+        }
+    }
+
+    public static void updateSQLDish(int id, String name, double price, String classification, String url) {
         try {
             String sql = String.format("UPDATE DISHES SET NAME = '%s', " +
                     "PRICE = %f, CLASS = '%s', URL = '%s' WHERE ID = %d;", name, price, classification, url, id);
@@ -67,7 +79,7 @@ public class DataUtils {
     }
 
     public Dish[] showDishes(String word) {
-        if(word.equals(""))
+        if (word.equals(""))
             updateNumOfDishes();
         else
             updateNumOfDishes(word);
@@ -75,9 +87,9 @@ public class DataUtils {
         try {
             String sql;
             if (word.equals(""))
-                sql="SELECT * FROM DISHES;";
+                sql = "SELECT * FROM DISHES;";
             else
-                sql=String.format("SELECT * FROM DISHES WHERE NAME GLOB '*%s*' OR CLASS GLOB '*%s*';", word, word);
+                sql = String.format("SELECT * FROM DISHES WHERE NAME GLOB '*%s*' OR CLASS GLOB '*%s*';", word, word);
             ps = sqLiteUtils.getStatement(sql);
             rs = ps.executeQuery();
             for (int i = 0; i < numOfDishes; i++) {
@@ -94,8 +106,8 @@ public class DataUtils {
         return result;
     }
 
-
-    public void updateDish(Dish dish, Frame owner, Component parentComponent) {
+    //弹出更新信息的窗口
+    public static void updateDish(Dish dish, Frame owner, Component parentComponent) {
         JDialog dialog = new JDialog(owner, "更新信息", true);
         dialog.setSize(600, 300);
         dialog.setResizable(false);
@@ -146,7 +158,7 @@ public class DataUtils {
                     File file = fileChooser.getSelectedFile();
                     //获取文件后缀
                     String fileName = file.getName();
-                    String fileExt = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                    String fileExt = fileName.substring(fileName.lastIndexOf("."));
                     //先暂存源目录和目标目录
                     source[0] = file.toPath();
                     target[0] = new File("resources/img/" + dish.getId() + fileExt).toPath();
@@ -224,11 +236,22 @@ public class DataUtils {
 
         dialog.setContentPane(rootPanel);
         dialog.setVisible(true);
-
     }
 
-    public static void main(String... a) {
-        var t = new DataUtils();
-        t.showDishes("");
+    public static void deleteDish(Dish dish, Component parentComponent) {
+        int result = JOptionPane.showConfirmDialog(parentComponent,
+                "确认删除？", "提示", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            System.out.println("yes");
+            String sql = String.format("DELETE FROM DISHES WHERE ID = %d", dish.getId());
+            try {
+                ps = sqLiteUtils.getStatement(sql);
+                ps.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }finally {
+                sqLiteUtils.close();
+            }
+        }
     }
 }

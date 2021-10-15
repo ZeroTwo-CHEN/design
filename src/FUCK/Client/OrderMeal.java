@@ -1,4 +1,4 @@
-package FUCK;
+package FUCK.Client;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

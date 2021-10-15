@@ -1,47 +1,43 @@
 package FUCK.Client;
 
-import FUCK.DataUtils;
-
 import javax.swing.*;
 
 public class AdminClient {
     private JPanel root;
-    private JPanel dishesPanel;
     private JTextField searchTextField;
-    private JButton searchButton;
     private JPanel JPanel;
     private JScrollPane dishesScrollPane;
-    private JPanel __dishesPanel;
+    private JTable dishesTable;
+    private JButton addButton;
 
-    public AdminClient() {
-        DataUtils data = new DataUtils();
-        searchButton.addActionListener(e -> {
-            dishesPanel = DishesPanelUtils.paintDishesPanel(data,searchTextField.getText());
-            __dishesPanel.removeAll();
-            __dishesPanel.repaint();
-            __dishesPanel.add(dishesPanel);
-            __dishesPanel.revalidate();
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("AdminClient");
+            frame.setContentPane(new AdminClient().root);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(700, 600);
+            frame.setVisible(true);
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("AdminClient");
-        frame.setContentPane(new AdminClient().root);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 600);
-        frame.setVisible(true);
-    }
-
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-
-        //数据实例
-        DataUtils data = new DataUtils();
-
-
         //菜品栏
-        __dishesPanel = new JPanel();//辅助用面板 搜索后刷新面板的辅助
-        dishesPanel=DishesPanelUtils.paintDishesPanel(data,"");
-        __dishesPanel.add(dishesPanel);
+        DishesJTable jTable = new DishesJTable();
+        dishesTable= jTable.getTable();
+
+        //搜索框
+        searchTextField = new JTextField();
+        searchTextField.addActionListener(e -> jTable.newFilter(searchTextField.getText()));
+
+        //增加菜品
+        addButton = new JButton();
+        addButton.addActionListener(e -> {
+            AddDish addDish = new AddDish();
+            addDish.setLocationRelativeTo(null);
+            addDish.setTitle("新增菜品");
+            addDish.pack();
+            addDish.setVisible(true);
+            jTable.reloadJTable();
+        });
     }
 }
