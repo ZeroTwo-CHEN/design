@@ -1,10 +1,10 @@
-package FUCK.Client;
+package JR.Client.Admin;
 
-import FUCK.JDBC.DataUtils;
-import FUCK.Model.Dish;
+import JR.JDBC.DataUtils;
+import JR.Model.Dish;
+import JR.Model.MyTableModel;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
@@ -59,6 +59,9 @@ public class DishesJTable {
     public void reloadJTable() {
         dishes = dataUtils.showDishes("");
 
+        //清空vector
+        data.removeAllElements();
+
         for (Dish dish : dishes) {
             Vector<Object> a = new Vector<>();
             a.add(dish.getId());
@@ -100,13 +103,11 @@ public class DishesJTable {
 }
 
 class ButtonRenderer implements TableCellRenderer {
-    private JButton updateButton;
-    private JButton deleteButton;
     private JPanel panel;
 
     public ButtonRenderer() {
-        updateButton = new JButton("更新");
-        deleteButton = new JButton("删除");
+        JButton updateButton = new JButton("更新");
+        JButton deleteButton = new JButton("删除");
         GridLayout layout = new GridLayout(2, 1);
         layout.setVgap(15);
         panel = new JPanel(layout);
@@ -141,8 +142,7 @@ class ButtonEditor extends DefaultCellEditor {
 
         deleteButton.addActionListener(e -> {
             int index = table.getTable().convertRowIndexToModel(table.getTable().getSelectedRow());
-            DataUtils.deleteDish(DishesJTable.dishes[index], panel);
-            DishesJTable.myTableModel.removeRow(index);
+            if (DataUtils.deleteDish(DishesJTable.dishes[index], panel)) DishesJTable.myTableModel.removeRow(index);
         });
 
         panel = new JPanel(layout);
@@ -161,20 +161,3 @@ class ButtonEditor extends DefaultCellEditor {
     }
 }
 
-class MyTableModel extends DefaultTableModel {
-
-    @Override
-    public int getColumnCount() {
-        return 6;
-    }
-
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return column == 5;
-    }
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        return getValueAt(0, columnIndex).getClass();
-    }
-}

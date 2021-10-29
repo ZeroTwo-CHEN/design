@@ -1,6 +1,6 @@
-package FUCK.JDBC;
+package JR.JDBC;
 
-import FUCK.Model.Dish;
+import JR.Model.Dish;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -238,11 +238,11 @@ public class DataUtils {
         dialog.setVisible(true);
     }
 
-    public static void deleteDish(Dish dish, Component parentComponent) {
+    public static boolean deleteDish(Dish dish, Component parentComponent) {
         int result = JOptionPane.showConfirmDialog(parentComponent,
                 "确认删除？", "提示", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            System.out.println("yes");
+//            System.out.println("yes");
             String sql = String.format("DELETE FROM DISHES WHERE ID = %d", dish.getId());
             try {
                 ps = sqLiteUtils.getStatement(sql);
@@ -251,7 +251,9 @@ public class DataUtils {
                 e.printStackTrace();
             }finally {
                 sqLiteUtils.close();
+                return true;
             }
         }
+        return false;
     }
 }

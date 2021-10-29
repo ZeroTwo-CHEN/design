@@ -1,4 +1,4 @@
-package FUCK.JDBC;
+package JR.JDBC;
 
 import java.sql.*;
 

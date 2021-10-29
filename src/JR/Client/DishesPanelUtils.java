@@ -1,7 +1,7 @@
-package FUCK.Client;
+package JR.Client;
 
-import FUCK.JDBC.DataUtils;
-import FUCK.Model.Dish;
+import JR.JDBC.DataUtils;
+import JR.Model.Dish;
 
 import javax.swing.*;
 import java.awt.*;

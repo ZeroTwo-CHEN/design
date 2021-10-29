@@ -1,7 +1,7 @@
-package FUCK.Client;
+package JR.Client.Admin;
 
-import FUCK.JDBC.DataUtils;
-import FUCK.Model.Dish;
+import JR.JDBC.DataUtils;
+import JR.Model.Dish;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,7 +25,7 @@ public class AddDish extends JDialog {
     private JTextField name;
 
     private Path source;
-    private Path target;
+    private Path target = Path.of("resources/img/default.jpg");
     private boolean isAddImg = false;
 
 
@@ -60,7 +60,7 @@ public class AddDish extends JDialog {
                 ex.printStackTrace();
             }
         }
-        DataUtils.addDish(name.getText(),Double.parseDouble(price.getText()),classification.getText(),target.toString());
+        DataUtils.addDish(name.getText(), Double.parseDouble(price.getText()), classification.getText(), target.toString());
         dispose();
     }
 
@@ -115,7 +115,7 @@ public class AddDish extends JDialog {
                 //先暂存源目录和目标目录
                 source = file.toPath();
                 Date date = new Date();
-                target = new File("resources/img/" + date.getTime()/1000 + fileExt).toPath();
+                target = new File("resources/img/" + date.getTime() / 1000 + fileExt).toPath();
 
                 isAddImg = true;
 

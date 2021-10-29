@@ -1,4 +1,4 @@
-package FUCK;
+package JR;
 
 import javax.swing.*;
 import java.awt.*;

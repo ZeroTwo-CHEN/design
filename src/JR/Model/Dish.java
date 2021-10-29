@@ -1,9 +1,10 @@
-package FUCK.Model;
+package JR.Model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class Dish {
+public class Dish implements Comparable<Dish>, Serializable {
     private int id;
     private String name;
     private double price;
@@ -17,7 +18,7 @@ public class Dish {
         this.price = price;
         this.classification = classification;
         this.icon = Dish.imgToIcon(url);
-        this.url=url;
+        this.url = url;
     }
 
     public int getId() {
@@ -66,5 +67,14 @@ public class Dish {
         dish.price = price;
         dish.classification = classification;
         dish.icon = imgToIcon(url);
+    }
+
+    @Override
+    public int compareTo(Dish o) {
+        if (o.id < this.id) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }
