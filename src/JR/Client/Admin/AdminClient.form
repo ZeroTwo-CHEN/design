@@ -32,9 +32,12 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="8d93c" class="javax.swing.JTable" binding="orderTable">
+                  <component id="8d93c" class="javax.swing.JTable" binding="orderTable" custom-create="true">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <font name="Microsoft YaHei UI" size="20" style="1"/>
+                      <foreground color="-16777216"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -65,7 +68,10 @@
                 <children>
                   <component id="dae78" class="javax.swing.JTable" binding="dishesTable" custom-create="true">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <font name="Microsoft YaHei UI" size="16" style="0"/>
+                      <foreground color="-16777216"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

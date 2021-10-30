@@ -16,8 +16,8 @@ public class DishesJTable {
     static MyTableModel myTableModel;
     private final DataUtils dataUtils;
     private final Vector<String> colName;
-    private ButtonEditor buttonEditor;
-    private ButtonRenderer buttonRenderer;
+    private final ButtonEditor buttonEditor;
+    private final ButtonRenderer buttonRenderer;
     private TableRowSorter<MyTableModel> sorter;
     private Vector<Vector<Object>> data = new Vector<>();
     static Dish[] dishes;
@@ -103,7 +103,7 @@ public class DishesJTable {
 }
 
 class ButtonRenderer implements TableCellRenderer {
-    private JPanel panel;
+    private final JPanel panel;
 
     public ButtonRenderer() {
         JButton updateButton = new JButton("更新");
@@ -122,16 +122,14 @@ class ButtonRenderer implements TableCellRenderer {
 }
 
 class ButtonEditor extends DefaultCellEditor {
-    private JButton updateButton;
-    private JButton deleteButton;
     private JPanel panel;
 
     public ButtonEditor(DishesJTable table) {
         super(new JTextField());
         setClickCountToStart(1);
         ButtonEditor.this.fireEditingCanceled();
-        updateButton = new JButton("更新");
-        deleteButton = new JButton("删除");
+        JButton updateButton = new JButton("更新");
+        JButton deleteButton = new JButton("删除");
         GridLayout layout = new GridLayout(2, 1);
         layout.setVgap(15);
 

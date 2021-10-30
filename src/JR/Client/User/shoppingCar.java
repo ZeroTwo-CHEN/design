@@ -60,7 +60,7 @@ public class shoppingCar extends JDialog {
 
     private void onOK() {
         // 在此处添加您的代码
-        Order order = new Order(sumPrice, dishNumTreeMap);
+        Order order = new Order(client.getId(),sumPrice, dishNumTreeMap);
         Message message = new Message(MessageType.TYPE_ORDER, client.getId(), order);
         int num = client.sendOrder(message);
         JOptionPane.showMessageDialog(contentPane,

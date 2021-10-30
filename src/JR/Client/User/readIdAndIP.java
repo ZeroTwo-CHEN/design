@@ -48,7 +48,7 @@ public class readIdAndIP extends JDialog {
             if (client.read(Math.toIntExact((Long) tableIdField.getValue()),
                     ipField.getText(),
                     Math.toIntExact((Long) tableIdField.getValue()))) {
-                client.setId(Math.toIntExact((Long) tableIdField.getValue()));
+                //已保存client.setId(Math.toIntExact((Long) tableIdField.getValue()));
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(contentPane, "该桌号已被注册", "提示", JOptionPane.INFORMATION_MESSAGE);

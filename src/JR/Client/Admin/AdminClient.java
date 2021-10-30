@@ -33,15 +33,16 @@ public class AdminClient {
         //实时订单面板
         statusPanel = new JPanel(new GridLayout(1, 4));
         statusPanel.add(new JLabel("当前订单数："));
-        numOfOrdersField = new JTextField();
+        numOfOrdersField = new JTextField("0");
         numOfOrdersField.setEditable(false);
-        numOfClientsField = new JTextField();
+        numOfClientsField = new JTextField("0");
         statusPanel.add(numOfOrdersField);
         numOfClientsField.setEditable(false);
         statusPanel.add(new JLabel("当前在线客户端数："));
         statusPanel.add(numOfClientsField);
 
-
+        OrdersJTable ordersJTable = new OrdersJTable();
+        orderTable = ordersJTable.getTable();
 
         //菜品管理面板
         //菜品栏
@@ -65,8 +66,40 @@ public class AdminClient {
 
         //服务器线程
         logArea = new JTextArea();
-        Thread serverThread = new Thread(() -> new Server(logArea));
+        Thread serverThread = new Thread(() -> {
+            new Server(logArea);
+            //ordersJTable.setOrderQueue(Server.getOrderQueue());
+            //以下语句不可达到
+            System.out.println("fas");
+        });
         serverThread.start();
 
+        try {
+            Thread.sleep (1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ordersJTable.setOrderQueue(Server.getOrderQueue());
+
+        Thread thread=new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    if (Server.isOrderFlag()) {
+                        ordersJTable.reloadJTable();
+                        numOfOrdersField.setText(String.valueOf(Server.getOrderQueue().size()));
+                        Server.setOrderFlag(false);
+                    }
+                    if(Server.isClientFlag()){
+                        numOfClientsField.setText(String.valueOf(Server.getNumOfClients()));
+                        Server.setClientFlag(false);
+                    }
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 }

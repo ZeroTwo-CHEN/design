@@ -8,7 +8,6 @@ public class OrderMeal {
     private JPanel root;
     private JTable dishesTable;
     private JTextField searchTextField;
-    private JButton orderButton;
     private JButton carButton;
     private static Client client;
 

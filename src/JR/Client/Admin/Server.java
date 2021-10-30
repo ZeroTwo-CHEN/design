@@ -13,15 +13,18 @@ import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Server {
     private ServerSocket serverSocket;
-    private Set<Integer> clients;
-    private Queue<Order> orderQueue;
+    private static Set<Integer> clients;
+    private static LinkedBlockingQueue<Order> orderQueue;
     private static final Logger logger = Logger.getLogger("Server");
+    private static boolean orderFlag = false;//用于判断是否收到订单，辅助订单面板的刷新；收到为true
+    private static boolean clientFlag = false;//用于判断是否收到链接,收到为true
 
     public Server(JTextArea textArea) {
         //日志
@@ -36,7 +39,8 @@ public class Server {
             e.printStackTrace();
         }
 
-        orderQueue = new LinkedList<>();
+        orderQueue = new LinkedBlockingQueue<>();
+
         //使用Collections辅助类解决线程不安全
         clients = Collections.synchronizedSet(new HashSet<>());
         ExecutorService executorService = Executors.newFixedThreadPool(12);
@@ -46,6 +50,7 @@ public class Server {
             while (true) {
                 Socket socket = serverSocket.accept();
                 UserThread userThread = new UserThread(socket, clients, orderQueue, logger);
+                clientFlag = true;
                 executorService.execute(userThread);
             }
         } catch (IOException e) {
@@ -53,12 +58,28 @@ public class Server {
         }
     }
 
-    public int getNumOfClients() {
+    public static int getNumOfClients() {
         return clients.size();
     }
 
-    public Queue<Order> getOrderQueue() {
+    public static LinkedBlockingQueue<Order> getOrderQueue() {
         return orderQueue;
+    }
+
+    public static void setOrderFlag(boolean orderFlag) {
+        Server.orderFlag = orderFlag;
+    }
+
+    public static boolean isOrderFlag() {
+        return orderFlag;
+    }
+
+    public static boolean isClientFlag() {
+        return clientFlag;
+    }
+
+    public static void setClientFlag(boolean clientFlag) {
+        Server.clientFlag = clientFlag;
     }
 }
 
@@ -100,7 +121,8 @@ class UserThread implements Runnable {
                     case MessageType.TYPE_ORDER -> {
                         logger.info("收到来自客户端【" + message.getTableId() + "】的订单");
                         orderQueue.add(message.getOrder());
-                        objectOutputStream.writeObject(new Message(MessageType.TYPE_ORDER,orderQueue.size()-1));
+                        objectOutputStream.writeObject(new Message(MessageType.TYPE_ORDER, orderQueue.size() - 1));
+                        Server.setOrderFlag(true);
                     }
                     case MessageType.TYPE_LOGOUT -> {
                         logger.info("客户端【" + message.getTableId() + "】下线");
