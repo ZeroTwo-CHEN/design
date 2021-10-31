@@ -15,10 +15,10 @@ public class CustomerDishesJTable {
     private final JTable table;
     static MyTableModel myTableModel;
     private final Vector<String> colName;
-    private SpinnerEditor spinnerEditor;
-    private SpinnerRenderer spinnerRenderer;
-    private TableRowSorter<MyTableModel> sorter;
-    private Vector<Vector<Object>> data = new Vector<>();
+    private final SpinnerEditor spinnerEditor;
+    private final SpinnerRenderer spinnerRenderer;
+    private final TableRowSorter<MyTableModel> sorter;
+    private final Vector<Vector<Object>> data = new Vector<>();
     private Dish[] dishes;
 
     public static void main(String[] args) {
@@ -88,6 +88,10 @@ public class CustomerDishesJTable {
         sorter.setRowFilter(rf);
     }
 
+    public void reset() {
+        for (int i = 0; i < table.getRowCount(); i++) table.setValueAt(0, i, 5);
+    }
+
     public JTable getTable() {
         return table;
     }
@@ -99,7 +103,7 @@ public class CustomerDishesJTable {
 }
 
 class SpinnerRenderer implements TableCellRenderer {
-    private JSpinner spinner;
+    private final JSpinner spinner;
 
     public SpinnerRenderer() {
         spinner = new JSpinner();
@@ -113,7 +117,7 @@ class SpinnerRenderer implements TableCellRenderer {
 }
 
 class SpinnerEditor extends DefaultCellEditor {
-    private JSpinner spinner;
+    private final JSpinner spinner;
 
     public SpinnerEditor() {
         super(new JTextField());

@@ -112,9 +112,9 @@ class OperationEditor extends DefaultCellEditor {
 
         detailButton.addActionListener(e -> {
             int index = ordersJTable.getTable().convertRowIndexToModel(ordersJTable.getTable().getSelectedRow());
-            DetailPanel detailPanel = new DetailPanel(ordersJTable.getOrderArrayList().get(index));
+            DetailPanel detailPanel = new DetailPanel(ordersJTable.getOrderArrayList().get(index),index,ordersJTable);
             detailPanel.setLocationRelativeTo(panel);
-            detailPanel.setTitle("新增菜品");
+            detailPanel.setTitle("详情");
             detailPanel.pack();
             detailPanel.setVisible(true);
         });

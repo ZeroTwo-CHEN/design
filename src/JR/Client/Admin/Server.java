@@ -127,6 +127,7 @@ class UserThread implements Runnable {
                     case MessageType.TYPE_LOGOUT -> {
                         logger.info("客户端【" + message.getTableId() + "】下线");
                         clients.remove(message.getTableId());
+                        Server.setClientFlag(true);
                         return;
                     }
                 }

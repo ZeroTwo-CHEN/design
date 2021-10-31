@@ -57,7 +57,7 @@ public class AdminClient {
         addButton = new JButton();
         addButton.addActionListener(e -> {
             AddDish addDish = new AddDish();
-            addDish.setLocationRelativeTo(null);
+            addDish.setLocationRelativeTo(searchTextField);
             addDish.setTitle("新增菜品");
             addDish.pack();
             addDish.setVisible(true);

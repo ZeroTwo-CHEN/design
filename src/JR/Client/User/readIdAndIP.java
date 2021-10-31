@@ -9,7 +9,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.StringTokenizer;
 
-public class readIdAndIP extends JDialog {
+public class readIdAndIP extends JFrame {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -17,12 +17,14 @@ public class readIdAndIP extends JDialog {
     private JFormattedTextField ipField;
     private JFormattedTextField portField;
     private Client client;
+    private JFrame frame;
 
-    public readIdAndIP(Client client) {
+    public readIdAndIP(Client client,JFrame frame) {
         this.client = client;
+        this.frame = frame;
 
         setContentPane(contentPane);
-        setModal(true);
+        //setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         //setUndecorated(true);
 
@@ -49,6 +51,7 @@ public class readIdAndIP extends JDialog {
                     ipField.getText(),
                     Math.toIntExact((Long) tableIdField.getValue()))) {
                 //已保存client.setId(Math.toIntExact((Long) tableIdField.getValue()));
+                frame.setVisible(true);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(contentPane, "该桌号已被注册", "提示", JOptionPane.INFORMATION_MESSAGE);

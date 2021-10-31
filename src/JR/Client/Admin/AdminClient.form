@@ -82,6 +82,7 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <font name="Microsoft YaHei UI" size="16" style="0"/>
                   <text value="输入你想要搜索的菜品或分类或价格，按下回车搜索"/>
                 </properties>
               </component>
@@ -109,7 +110,9 @@
                 <children>
                   <component id="6f6c5" class="javax.swing.JTextArea" binding="logArea" custom-create="true">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <font name="Microsoft YaHei" size="18" style="0"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

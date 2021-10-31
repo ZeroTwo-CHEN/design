@@ -15,9 +15,13 @@ public class DetailPanel extends JDialog {
     private JTable dishesTable;
     private JPanel infoPanel;
     private final Order order;
+    private final OrdersJTable ordersJTable;
+    private final int index;
 
-    public DetailPanel(Order order) {
+    public DetailPanel(Order order, int index, OrdersJTable ordersJTable) {
         this.order = order;
+        this.index = index;
+        this.ordersJTable = ordersJTable;
 
         setContentPane(contentPane);
         setModal(false);
@@ -41,7 +45,14 @@ public class DetailPanel extends JDialog {
 
     private void onOK() {
         // 在此处添加您的代码
-        dispose();
+        int result = JOptionPane.showConfirmDialog(contentPane, "确认完成吗？", "提示", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            boolean isDelete = Server.getOrderQueue().remove(ordersJTable.getOrderArrayList().get(index));
+            ordersJTable.getTableModel().removeRow(index);
+            ordersJTable.reloadJTable();
+            Server.setOrderFlag(true);
+            dispose();
+        }
     }
 
     private void onCancel() {
@@ -62,7 +73,7 @@ public class DetailPanel extends JDialog {
         Object[][] data = new Object[order.getDishNumTreeMap().size()][4];
 
         int i = 0;
-        for(Map.Entry<Dish, Integer> entry: order.getDishNumTreeMap().entrySet()){
+        for (Map.Entry<Dish, Integer> entry : order.getDishNumTreeMap().entrySet()) {
             data[i][0] = order.getTableId();
             data[i][1] = entry.getKey().getName();
             data[i++][2] = entry.getValue();
