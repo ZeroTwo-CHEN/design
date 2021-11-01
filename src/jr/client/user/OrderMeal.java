@@ -35,7 +35,7 @@ public class OrderMeal {
             frame.setSize(700, 600);
             frame.setVisible(false);
 
-            readIdAndIP readIdAndIP = new readIdAndIP(client,frame);
+            ReadIdAndIP readIdAndIP = new ReadIdAndIP(client,frame);
             readIdAndIP.setLocationRelativeTo(null);
             readIdAndIP.pack();
             readIdAndIP.setTitle("初始化");

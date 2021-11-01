@@ -9,7 +9,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.StringTokenizer;
 
-public class readIdAndIP extends JFrame {
+public class ReadIdAndIP extends JFrame {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -19,7 +19,7 @@ public class readIdAndIP extends JFrame {
     private final Client client;
     private final JFrame frame;
 
-    public readIdAndIP(Client client,JFrame frame) {
+    public ReadIdAndIP(Client client, JFrame frame) {
         this.client = client;
         this.frame = frame;
 

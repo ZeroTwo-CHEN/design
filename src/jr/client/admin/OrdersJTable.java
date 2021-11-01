@@ -34,6 +34,7 @@ public class OrdersJTable {
         table.setRowHeight(50);
         table.setRowSelectionAllowed(false);
         table.setFont((new Font("微软雅黑", Font.PLAIN, 20)));
+        tableModel.setDataVector(data, colName);
     }
 
     public void setOrderQueue(LinkedBlockingQueue<Order> orderQueue) {
@@ -112,7 +113,7 @@ class OperationEditor extends DefaultCellEditor {
 
         detailButton.addActionListener(e -> {
             int index = ordersJTable.getTable().convertRowIndexToModel(ordersJTable.getTable().getSelectedRow());
-            DetailPanel detailPanel = new DetailPanel(ordersJTable.getOrderArrayList().get(index),index,ordersJTable);
+            DetailPanel detailPanel = new DetailPanel(ordersJTable.getOrderArrayList().get(index), index, ordersJTable);
             detailPanel.setLocationRelativeTo(panel);
             detailPanel.setTitle("详情");
             detailPanel.pack();
