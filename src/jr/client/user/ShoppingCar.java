@@ -36,8 +36,10 @@ public class ShoppingCar extends JDialog {
         //customerDishesJTable.newFilter("");
         for (int i = 0; i < jTable.getRowCount(); i++) {
             int num = (int) jTable.getValueAt(i, 5);
+            //把获取到的表格索引改为数据模型中的索引
+            int modelIndex = jTable.convertRowIndexToModel(i);
             if (num > 0) {
-                dishNumTreeMap.put(allDishes[i], num);
+                dishNumTreeMap.put(allDishes[modelIndex], num);
             }
         }
         printList();
