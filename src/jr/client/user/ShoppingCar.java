@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class shoppingCar extends JDialog {
+public class ShoppingCar extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -23,7 +23,7 @@ public class shoppingCar extends JDialog {
     private final TreeMap<Dish, Integer> dishNumTreeMap;
     private final Client client;
 
-    public shoppingCar(CustomerDishesJTable customerDishesJTable, Client client) {
+    public ShoppingCar(CustomerDishesJTable customerDishesJTable, Client client) {
         this.client = client;
 
         setContentPane(contentPane);
@@ -33,6 +33,7 @@ public class shoppingCar extends JDialog {
         dishNumTreeMap = new TreeMap<>();
         Dish[] allDishes = customerDishesJTable.getDishes();
         JTable jTable = customerDishesJTable.getTable();
+        //customerDishesJTable.newFilter("");
         for (int i = 0; i < jTable.getRowCount(); i++) {
             int num = (int) jTable.getValueAt(i, 5);
             if (num > 0) {

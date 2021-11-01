@@ -65,7 +65,9 @@ public class OrderMeal {
         //购物车
         carButton = new JButton();
         carButton.addActionListener(e -> {
-            shoppingCar sC = new shoppingCar(customerDishesJTable, client);
+            customerDishesJTable.newFilter("");
+            classComboBox.setSelectedItem("全部");
+            ShoppingCar sC = new ShoppingCar(customerDishesJTable, client);
             sC.setLocationRelativeTo(searchTextField);
             sC.setTitle("购物车");
             sC.pack();
