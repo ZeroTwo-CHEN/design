@@ -66,7 +66,6 @@ public class CustomerDishesJTable {
         myTableModel.setDataVector(data, colName);
         table.getColumnModel().getColumn(5).setCellRenderer(spinnerRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(spinnerEditor);
-
     }
 
     public void newFilter(String word) {
@@ -117,7 +116,7 @@ class SpinnerEditor extends DefaultCellEditor {
         super(new JTextField());
         setClickCountToStart(1);
         SpinnerEditor.this.fireEditingCanceled();
-        SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, null, 1);
+        SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
         spinner = new JSpinner(spinnerModel);
     }
 
