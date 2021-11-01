@@ -1,6 +1,6 @@
-package JR.Client.Admin;
+package jr.client.admin;
 
-import JR.Model.Order;
+import jr.model.Order;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,9 +16,9 @@ public class OrdersJTable {
     private final Vector<String> colName;
     private final OperationRenderer operationRenderer;
     private final OperationEditor operationEditor;
-    private Vector<Vector<Object>> data = new Vector<>();
+    private final Vector<Vector<Object>> data = new Vector<>();
     private LinkedBlockingQueue<Order> orderQueue;
-    private ArrayList<Order> orderArrayList;
+    private final ArrayList<Order> orderArrayList;
 
     public OrdersJTable() {
         this.orderArrayList = new ArrayList<>();

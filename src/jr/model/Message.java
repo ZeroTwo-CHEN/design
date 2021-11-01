@@ -1,9 +1,9 @@
-package JR.Model;
+package jr.model;
 
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    public int type;
+    public final int type;
     private int tableId;
     private Order order;
 

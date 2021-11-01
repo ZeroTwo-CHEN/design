@@ -1,4 +1,4 @@
-package JR.JDBC;
+package jr.jdbc;
 
 import java.sql.*;
 
@@ -64,10 +64,6 @@ public class SQLiteUtils {
                     + "URL TEXT)";
             stat.executeUpdate(sql);
 
-//            for(int i=0;i<9;i++){
-//                stat.executeUpdate("INSERT INTO DISHES (NAME,PRICE,CLASS,URL) " +
-//                        "VALUES ('嘉然',114514.14,'神','src/resources/img/default.jpg')");
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

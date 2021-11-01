@@ -1,7 +1,7 @@
-package JR.Client.Admin;
+package jr.client.admin;
 
-import JR.Model.Dish;
-import JR.Model.Order;
+import jr.model.Dish;
+import jr.model.Order;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,16 +1,16 @@
-package JR.Model;
+package jr.model;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 
 public class Dish implements Comparable<Dish>, Serializable {
-    private int id;
+    private final int id;
     private String name;
     private double price;
     private ImageIcon icon;
     private String classification;
-    private String url;
+    private final String url;
 
     public Dish(int id, String name, double price, String classification, String url) {
         this.id = id;

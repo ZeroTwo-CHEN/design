@@ -1,4 +1,4 @@
-package JR.Client.User;
+package jr.client.user;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -16,8 +16,8 @@ public class readIdAndIP extends JFrame {
     private JFormattedTextField tableIdField;
     private JFormattedTextField ipField;
     private JFormattedTextField portField;
-    private Client client;
-    private JFrame frame;
+    private final Client client;
+    private final JFrame frame;
 
     public readIdAndIP(Client client,JFrame frame) {
         this.client = client;
@@ -67,7 +67,7 @@ public class readIdAndIP extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         InternationalFormatter internationalFormatter = new InternationalFormatter(NumberFormat.getIntegerInstance()) {
-            private DocumentFilter filter = new IntFilter();
+            private final DocumentFilter filter = new IntFilter();
 
             @Override
             protected DocumentFilter getDocumentFilter() {

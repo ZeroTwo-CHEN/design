@@ -1,8 +1,8 @@
-package JR.Client.Admin;
+package jr.client.admin;
 
-import JR.Model.Message;
-import JR.Model.MessageType;
-import JR.Model.Order;
+import jr.model.Message;
+import jr.model.MessageType;
+import jr.model.Order;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -85,12 +85,12 @@ public class Server {
 
 class UserThread implements Runnable {
     private int id;
-    private Socket socket;
+    private final Socket socket;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
-    private Queue<Order> orderQueue;
-    private Logger logger;
-    private Set<Integer> clients;
+    private final Queue<Order> orderQueue;
+    private final Logger logger;
+    private final Set<Integer> clients;
 
     //TODO: id由客户端发送来
     public UserThread(Socket socket, Set<Integer> clients, Queue<Order> orderQueue, Logger logger) {

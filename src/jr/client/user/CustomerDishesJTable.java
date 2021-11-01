@@ -1,8 +1,8 @@
-package JR.Client.User;
+package jr.client.user;
 
-import JR.JDBC.DataUtils;
-import JR.Model.Dish;
-import JR.Model.MyTableModel;
+import jr.jdbc.DataUtils;
+import jr.model.Dish;
+import jr.model.MyTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -67,18 +67,12 @@ public class CustomerDishesJTable {
         table.getColumnModel().getColumn(5).setCellRenderer(spinnerRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(spinnerEditor);
 
-//        table.getModel().addTableModelListener(new TableModelListener() {
-//            @Override
-//            public void tableChanged(TableModelEvent e) {
-//                if (e.getType() == TableModelEvent.UPDATE) {
-//                    System.out.println(e.getLastRow());
-//                }
-//            }
-//        });
-
     }
 
     public void newFilter(String word) {
+        if (word.equals("全部")) {
+            word = "";
+        }
         RowFilter<MyTableModel, Object> rf = null;
         try {
             rf = RowFilter.regexFilter(word);

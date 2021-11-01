@@ -1,4 +1,4 @@
-package JR.Model;
+package jr.model;
 
 import javax.swing.table.DefaultTableModel;
 

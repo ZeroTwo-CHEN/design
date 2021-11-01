@@ -1,8 +1,11 @@
-package JR.Client.User;
+package jr.client.user;
+
+import jr.jdbc.DataUtils;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Objects;
 
 public class OrderMeal {
     private JPanel root;
@@ -10,10 +13,12 @@ public class OrderMeal {
     private JTextField searchTextField;
     private JButton carButton;
     private JButton resetButton;
+    private JComboBox<String> classComboBox;
     private static Client client;
 
     public static void main(String[] args) {
         client = new Client();
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("OrderMeal");
             frame.setContentPane(new OrderMeal().root);
@@ -38,16 +43,20 @@ public class OrderMeal {
         });
     }
 
-    //TODO: 重置所有选择的按钮
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        //DataUtils dataUtils = new DataUtils();
 
         CustomerDishesJTable customerDishesJTable = new CustomerDishesJTable();
         dishesTable = customerDishesJTable.getTable();
 
-        //搜索框
+        //搜索框,分类下拉框
         searchTextField = new JTextField();
+        classComboBox = new JComboBox<>(DataUtils.allClass());
+
         searchTextField.addActionListener(e -> customerDishesJTable.newFilter(searchTextField.getText()));
+
+        classComboBox.addActionListener(e -> customerDishesJTable.newFilter((String) Objects.requireNonNull(classComboBox.getSelectedItem())));
 
         //重置按钮
         resetButton = new JButton();
@@ -62,12 +71,5 @@ public class OrderMeal {
             sC.pack();
             sC.setVisible(true);
         });
-
-
-//        readIdAndIP readIdAndIP = new readIdAndIP(client);
-//        readIdAndIP.setLocationRelativeTo(null);
-//        readIdAndIP.pack();
-//        readIdAndIP.setTitle("初始化");
-//        readIdAndIP.setVisible(true);
     }
 }

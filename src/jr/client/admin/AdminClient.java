@@ -1,4 +1,4 @@
-package JR.Client.Admin;
+package jr.client.admin;
 
 import javax.swing.*;
 import java.awt.*;

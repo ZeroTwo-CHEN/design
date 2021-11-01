@@ -1,7 +1,7 @@
-package JR.Client.Admin;
+package jr.client.admin;
 
-import JR.JDBC.DataUtils;
-import JR.Model.Dish;
+import jr.jdbc.DataUtils;
+import jr.model.Dish;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

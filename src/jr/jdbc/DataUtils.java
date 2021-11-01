@@ -1,6 +1,6 @@
-package JR.JDBC;
+package jr.jdbc;
 
-import JR.Model.Dish;
+import jr.model.Dish;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -15,6 +15,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 public class DataUtils {
     private static SQLiteUtils sqLiteUtils;
@@ -27,9 +28,27 @@ public class DataUtils {
         updateNumOfDishes();
     }
 
+    public static Vector<String> allClass() {
+        Vector<String> result = new Vector<>();
+        result.add("全部");
+        String sql = "SELECT DISTINCT CLASS FROM DISHES;";
+        try {
+            ps = sqLiteUtils.getStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.add(rs.getString("CLASS"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            sqLiteUtils.close();
+        }
+        return result;
+    }
+
     private void updateNumOfDishes() {
         try {
-            String sql = String.format("SELECT COUNT(ID) FROM DISHES;");
+            String sql = "SELECT COUNT(ID) FROM DISHES;";
             ps = sqLiteUtils.getStatement(sql);
             rs = ps.executeQuery();
             numOfDishes = rs.getInt("COUNT(ID)");

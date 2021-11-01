@@ -1,4 +1,4 @@
-package JR.Model;
+package jr.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.TreeMap;
 
 public class Order implements Serializable {
-    private int tableId;
-    private String date;
-    private double sumPrice;
-    private TreeMap<Dish, Integer> dishNumTreeMap;
+    private final int tableId;
+    private final String date;
+    private final double sumPrice;
+    private final TreeMap<Dish, Integer> dishNumTreeMap;
 
     public Order(int tableId,double sumPrice, TreeMap<Dish, Integer> dishNumTreeMap) {
         Date date = new Date();

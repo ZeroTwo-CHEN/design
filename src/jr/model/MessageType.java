@@ -1,4 +1,4 @@
-package JR.Model;
+package jr.model;
 
 public class MessageType {
     public static final int TYPE_LOGIN = 1;//客户端上线

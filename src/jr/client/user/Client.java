@@ -1,7 +1,7 @@
-package JR.Client.User;
+package jr.client.user;
 
-import JR.Model.Message;
-import JR.Model.MessageType;
+import jr.model.Message;
+import jr.model.MessageType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

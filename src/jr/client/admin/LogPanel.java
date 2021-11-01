@@ -1,7 +1,6 @@
-package JR.Client.Admin;
+package jr.client.admin;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
@@ -14,13 +13,14 @@ public class LogPanel extends StreamHandler {
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         //textArea.setFont();
+        //noinspection RedundantThrows
         setOutputStream(new OutputStream() {
             @Override
-            public void write(int b) throws IOException {
+            public void write(int b) {
             }
 
             @Override
-            public void write(byte[] b, int off, int len) throws IOException {
+            public void write(byte[] b, int off, int len) {
                 textArea.append(new String(b, off, len));
             }
         });

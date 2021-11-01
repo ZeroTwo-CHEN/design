@@ -1,9 +1,9 @@
-package JR.Client.User;
+package jr.client.user;
 
-import JR.Model.Dish;
-import JR.Model.Message;
-import JR.Model.MessageType;
-import JR.Model.Order;
+import jr.model.Dish;
+import jr.model.Message;
+import jr.model.MessageType;
+import jr.model.Order;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,8 +20,8 @@ public class shoppingCar extends JDialog {
     private JTable listTable;
     private JTextField sumPriceField;
     private double sumPrice;
-    private TreeMap<Dish, Integer> dishNumTreeMap;
-    private Client client;
+    private final TreeMap<Dish, Integer> dishNumTreeMap;
+    private final Client client;
 
     public shoppingCar(CustomerDishesJTable customerDishesJTable, Client client) {
         this.client = client;
@@ -98,7 +98,4 @@ public class shoppingCar extends JDialog {
         sumPriceField.setText(String.valueOf(sumPrice));
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }

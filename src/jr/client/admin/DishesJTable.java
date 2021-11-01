@@ -1,8 +1,8 @@
-package JR.Client.Admin;
+package jr.client.admin;
 
-import JR.JDBC.DataUtils;
-import JR.Model.Dish;
-import JR.Model.MyTableModel;
+import jr.jdbc.DataUtils;
+import jr.model.Dish;
+import jr.model.MyTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -18,8 +18,8 @@ public class DishesJTable {
     private final Vector<String> colName;
     private final ButtonEditor buttonEditor;
     private final ButtonRenderer buttonRenderer;
-    private TableRowSorter<MyTableModel> sorter;
-    private Vector<Vector<Object>> data = new Vector<>();
+    private final TableRowSorter<MyTableModel> sorter;
+    private final Vector<Vector<Object>> data = new Vector<>();
     static Dish[] dishes;
 
     public static void main(String[] colName) {
