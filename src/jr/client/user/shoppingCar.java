@@ -60,12 +60,16 @@ public class shoppingCar extends JDialog {
 
     private void onOK() {
         // 在此处添加您的代码
-        Order order = new Order(client.getId(),sumPrice, dishNumTreeMap);
-        Message message = new Message(MessageType.TYPE_ORDER, client.getId(), order);
-        int num = client.sendOrder(message);
-        JOptionPane.showMessageDialog(contentPane,
-                "提交订单成功\n前方还有" + num + "个订单\n请耐心等待哦", "提示", JOptionPane.INFORMATION_MESSAGE);
-        dispose();
+        if (!dishNumTreeMap.isEmpty()) {
+            Order order = new Order(client.getId(), sumPrice, dishNumTreeMap);
+            Message message = new Message(MessageType.TYPE_ORDER, client.getId(), order);
+            int num = client.sendOrder(message);
+            JOptionPane.showMessageDialog(contentPane,
+                    "提交订单成功\n前方还有" + num + "个订单\n请耐心等待哦", "提示", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }else {
+            JOptionPane.showMessageDialog(contentPane, "您还没选择菜品", "提示", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void onCancel() {

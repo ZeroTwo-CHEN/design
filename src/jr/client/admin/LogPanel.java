@@ -12,8 +12,6 @@ public class LogPanel extends StreamHandler {
         this.textArea = textArea;
         textArea.setEditable(false);
         textArea.setLineWrap(true);
-        //textArea.setFont();
-        //noinspection RedundantThrows
         setOutputStream(new OutputStream() {
             @Override
             public void write(int b) {
@@ -21,7 +19,7 @@ public class LogPanel extends StreamHandler {
 
             @Override
             public void write(byte[] b, int off, int len) {
-                textArea.append(new String(b, off, len));
+                textArea.insert(new String(b, off, len),0);
             }
         });
     }
