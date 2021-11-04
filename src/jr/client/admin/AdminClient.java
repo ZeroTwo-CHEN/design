@@ -2,6 +2,9 @@ package jr.client.admin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class AdminClient {
     private JPanel root;
@@ -16,8 +19,23 @@ public class AdminClient {
     private JScrollPane orderPanel;
     private JPanel statusPanel;
     private JTable orderTable;
+    private JLabel authorLabel;
+    private JLabel urlLabel;
     private JTextField numOfOrdersField;
     private JTextField numOfClientsField;
+
+    public AdminClient() {
+        urlLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Runtime.getRuntime().exec("cmd.exe /c start " + "https://github.com/ZeroTwo-CHEN/design");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -31,14 +49,21 @@ public class AdminClient {
 
     private void createUIComponents() {
         //实时订单面板
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 18);
         statusPanel = new JPanel(new GridLayout(1, 4));
-        statusPanel.add(new JLabel("当前订单数："));
+        JLabel numOfOrdersLabel = new JLabel("当前订单数：");
+        numOfOrdersLabel.setFont(font);
+        statusPanel.add(numOfOrdersLabel);
         numOfOrdersField = new JTextField("0");
+        numOfOrdersField.setFont(font);
         numOfOrdersField.setEditable(false);
         numOfClientsField = new JTextField("0");
+        numOfClientsField.setFont(font);
         statusPanel.add(numOfOrdersField);
         numOfClientsField.setEditable(false);
-        statusPanel.add(new JLabel("当前在线客户端数："));
+        JLabel numOfClientsLabel = new JLabel("当前在线客户端数：");
+        numOfClientsLabel.setFont(font);
+        statusPanel.add(numOfClientsLabel);
         statusPanel.add(numOfClientsField);
 
         OrdersJTable ordersJTable = new OrdersJTable();
@@ -75,13 +100,13 @@ public class AdminClient {
         serverThread.start();
 
         try {
-            Thread.sleep (1000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         ordersJTable.setOrderQueue(Server.getOrderQueue());
 
-        Thread thread=new Thread(() -> {
+        Thread thread = new Thread(() -> {
             while (true) {
                 try {
                     Thread.sleep(1000);
@@ -90,7 +115,7 @@ public class AdminClient {
                         numOfOrdersField.setText(String.valueOf(Server.getOrderQueue().size()));
                         Server.setOrderFlag(false);
                     }
-                    if(Server.isClientFlag()){
+                    if (Server.isClientFlag()) {
                         numOfClientsField.setText(String.valueOf(Server.getNumOfClients()));
                         Server.setClientFlag(false);
                     }

@@ -3,6 +3,7 @@ package jr.client.user;
 import jr.jdbc.DataUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Objects;
@@ -46,6 +47,7 @@ public class OrderMeal {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         //DataUtils dataUtils = new DataUtils();
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 18);
 
         CustomerDishesJTable customerDishesJTable = new CustomerDishesJTable();
         dishesTable = customerDishesJTable.getTable();
@@ -53,6 +55,7 @@ public class OrderMeal {
         //搜索框,分类下拉框
         searchTextField = new JTextField();
         classComboBox = new JComboBox<>(DataUtils.allClass());
+        classComboBox.setFont(font);
 
         searchTextField.addActionListener(e -> customerDishesJTable.newFilter(searchTextField.getText()));
 
@@ -60,10 +63,12 @@ public class OrderMeal {
 
         //重置按钮
         resetButton = new JButton();
+        resetButton.setFont(font);
         resetButton.addActionListener(e -> customerDishesJTable.reset());
 
         //购物车
         carButton = new JButton();
+        carButton.setFont(font);
         carButton.addActionListener(e -> {
             customerDishesJTable.newFilter("");
             classComboBox.setSelectedItem("全部");
