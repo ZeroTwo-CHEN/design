@@ -261,16 +261,15 @@ public class DataUtils {
         int result = JOptionPane.showConfirmDialog(parentComponent,
                 "确认删除？", "提示", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-//            System.out.println("yes");
             String sql = String.format("DELETE FROM DISHES WHERE ID = %d", dish.getId());
             try {
                 ps = sqLiteUtils.getStatement(sql);
                 ps.execute();
+                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }finally {
                 sqLiteUtils.close();
-                return true;
             }
         }
         return false;

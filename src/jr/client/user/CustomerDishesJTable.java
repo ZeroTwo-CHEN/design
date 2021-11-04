@@ -47,6 +47,11 @@ public class CustomerDishesJTable {
         table.setRowSorter(sorter);
         table.setRowHeight(100);
         table.setRowSelectionAllowed(false);
+
+//        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+//        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+//        table.getColumnModel().getColumn(2).setCellRenderer(renderer);
+
         init();
     }
 
