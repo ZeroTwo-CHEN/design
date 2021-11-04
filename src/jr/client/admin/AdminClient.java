@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class AdminClient {
     private JPanel root;
@@ -29,8 +31,9 @@ public class AdminClient {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    Runtime.getRuntime().exec("cmd.exe /c start " + "https://github.com/ZeroTwo-CHEN/design");
-                } catch (IOException ex) {
+                    Desktop.getDesktop().browse(
+                            new URL("https://github.com/ZeroTwo-CHEN/design").toURI());
+                } catch (URISyntaxException | IOException ex) {
                     ex.printStackTrace();
                 }
             }
