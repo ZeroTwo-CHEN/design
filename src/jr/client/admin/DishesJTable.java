@@ -1,5 +1,6 @@
 package jr.client.admin;
 
+import jr.client.utils.FilterUtil;
 import jr.client.utils.TableUtils;
 import jr.jdbc.DataUtils;
 import jr.model.Dish;
@@ -10,7 +11,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.Vector;
-import java.util.regex.PatternSyntaxException;
 
 public class DishesJTable {
     private final JTable table;
@@ -22,6 +22,7 @@ public class DishesJTable {
     private final TableRowSorter<MyTableModel> sorter;
     private final Vector<Vector<Object>> data = new Vector<>();
     static Dish[] dishes;
+    private RowFilter<MyTableModel, Object> classRowFilter;
 
     public static void main(String[] colName) {
         DishesJTable dishesJTable = new DishesJTable();
@@ -71,14 +72,12 @@ public class DishesJTable {
         //myTableModel.fireTableStructureChanged();
     }
 
-    public void newFilter(String word) {
-        RowFilter<MyTableModel, Object> rf = null;
-        try {
-            rf = RowFilter.regexFilter(word);
-        } catch (PatternSyntaxException e) {
-            e.printStackTrace();
-        }
-        sorter.setRowFilter(rf);
+    public void searchFieldFilter(String word) {
+        FilterUtil.searchFieldFilterUtil(sorter, classRowFilter, word);
+    }
+
+    public void classFilter(String word) {
+        classRowFilter=FilterUtil.classFilterUtil(sorter, word);
     }
 
     public void updateTableData(int index, JPanel panel) {

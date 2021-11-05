@@ -1,5 +1,7 @@
 package jr.client.admin;
 
+import jr.jdbc.DataUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -7,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Objects;
 
 public class AdminClient {
     private JPanel root;
@@ -23,6 +26,7 @@ public class AdminClient {
     private JTable orderTable;
     private JLabel authorLabel;
     private JLabel urlLabel;
+    private JComboBox<String> classComboBox;
     private JTextField numOfOrdersField;
     private JTextField numOfClientsField;
 
@@ -79,7 +83,12 @@ public class AdminClient {
 
         //搜索框
         searchTextField = new JTextField();
-        searchTextField.addActionListener(e -> jTable.newFilter(searchTextField.getText()));
+        searchTextField.addActionListener(e -> jTable.searchFieldFilter(searchTextField.getText()));
+
+        //分类下拉框
+        classComboBox = new JComboBox<>(DataUtils.allClass());
+        classComboBox.setFont(font);
+        classComboBox.addActionListener(e -> jTable.classFilter((String) Objects.requireNonNull(classComboBox.getSelectedItem())));
 
         //增加菜品
         addButton = new JButton();
@@ -89,6 +98,7 @@ public class AdminClient {
             addDish.setTitle("新增菜品");
             addDish.pack();
             addDish.setVisible(true);
+            classComboBox.setModel(new DefaultComboBoxModel<>(DataUtils.allClass()));
             jTable.reloadJTable();
         });
 

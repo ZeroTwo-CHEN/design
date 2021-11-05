@@ -1,5 +1,6 @@
 package jr.client.user;
 
+import jr.client.utils.FilterUtil;
 import jr.client.utils.TableUtils;
 import jr.jdbc.DataUtils;
 import jr.model.Dish;
@@ -9,9 +10,7 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Vector;
-import java.util.regex.PatternSyntaxException;
 
 public class CustomerDishesJTable {
     private final JTable table;
@@ -68,35 +67,11 @@ public class CustomerDishesJTable {
     }
 
     public void searchFieldFilter(String word) {
-        RowFilter<MyTableModel, Object> rf = null;
-        try {
-            rf = RowFilter.regexFilter(word, 0, 2);//只过滤id和菜名两列
-        } catch (PatternSyntaxException e) {
-            e.printStackTrace();
-        }
-        ArrayList<RowFilter<MyTableModel, Object>> andFilters = new ArrayList<>();
-        andFilters.add(rf);
-        if (this.classRowFilter != null)
-            andFilters.add(this.classRowFilter);
-        RowFilter<MyTableModel, Object> andFilter = RowFilter.andFilter(andFilters);
-        sorter.setRowFilter(andFilter);
+        FilterUtil.searchFieldFilterUtil(sorter, classRowFilter, word);
     }
 
     public void classFilter(String word) {
-        if (word.equals("全部")) {
-            classRowFilter = null;
-            sorter.setRowFilter(null);
-            return;
-        }
-        classRowFilter = new RowFilter<>() {
-            @Override
-            public boolean include(Entry<? extends MyTableModel, ?> entry) {
-                MyTableModel model = entry.getModel();
-                String s = (String) model.getValueAt((int) entry.getIdentifier(), 4);
-                return s.equals(word);
-            }
-        };
-        sorter.setRowFilter(classRowFilter);
+        classRowFilter=FilterUtil.classFilterUtil(sorter, word);
     }
 
     public void reset() {
