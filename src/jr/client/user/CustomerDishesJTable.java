@@ -1,5 +1,6 @@
 package jr.client.user;
 
+import jr.client.utils.TableUtils;
 import jr.jdbc.DataUtils;
 import jr.model.Dish;
 import jr.model.MyTableModel;
@@ -60,26 +61,16 @@ public class CustomerDishesJTable {
     public void init() {
         DataUtils dataUtils = new DataUtils();
         dishes = dataUtils.showDishes("");
-        for (Dish dish : dishes) {
-            Vector<Object> a = new Vector<>();
-            a.add(dish.getId());
-            a.add(dish.getImageIcon());
-            a.add(dish.getName());
-            a.add(dish.getPrice());
-            a.add(dish.getClassification());
-            a.add(0);
-            data.add(a);
-        }
+        TableUtils.dataLoadUtil(dishes, data);
         myTableModel.setDataVector(data, colName);
         table.getColumnModel().getColumn(5).setCellRenderer(spinnerRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(spinnerEditor);
     }
 
     public void searchFieldFilter(String word) {
-        //当过滤范围包含图片时 会导致结果出错?
         RowFilter<MyTableModel, Object> rf = null;
         try {
-            rf = RowFilter.regexFilter(word);
+            rf = RowFilter.regexFilter(word, 0, 2);//只过滤id和菜名两列
         } catch (PatternSyntaxException e) {
             e.printStackTrace();
         }

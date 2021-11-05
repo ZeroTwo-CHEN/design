@@ -53,7 +53,7 @@
             </constraints>
             <properties>
               <font name="Microsoft YaHei UI" size="16" style="0"/>
-              <text value="输入你想要搜索的菜品或分类或价格，按下回车搜索"/>
+              <text value="输入你想要搜索的菜名或ID，按下回车搜索"/>
             </properties>
           </component>
           <component id="eff7a" class="javax.swing.JButton" binding="resetButton" custom-create="true">

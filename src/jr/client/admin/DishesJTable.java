@@ -1,5 +1,6 @@
 package jr.client.admin;
 
+import jr.client.utils.TableUtils;
 import jr.jdbc.DataUtils;
 import jr.model.Dish;
 import jr.model.MyTableModel;
@@ -62,16 +63,8 @@ public class DishesJTable {
         //清空vector
         data.removeAllElements();
 
-        for (Dish dish : dishes) {
-            Vector<Object> a = new Vector<>();
-            a.add(dish.getId());
-            a.add(dish.getImageIcon());
-            a.add(dish.getName());
-            a.add(dish.getPrice());
-            a.add(dish.getClassification());
-            a.add("");
-            data.add(a);
-        }
+        TableUtils.dataLoadUtil(dishes, data);
+
         myTableModel.setDataVector(data, colName);
         table.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(buttonEditor);
