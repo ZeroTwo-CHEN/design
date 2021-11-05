@@ -57,9 +57,9 @@ public class OrderMeal {
         classComboBox = new JComboBox<>(DataUtils.allClass());
         classComboBox.setFont(font);
 
-        searchTextField.addActionListener(e -> customerDishesJTable.newFilter(searchTextField.getText()));
+        searchTextField.addActionListener(e -> customerDishesJTable.searchFieldFilter(searchTextField.getText()));
 
-        classComboBox.addActionListener(e -> customerDishesJTable.newFilter((String) Objects.requireNonNull(classComboBox.getSelectedItem())));
+        classComboBox.addActionListener(e -> customerDishesJTable.classFilter((String) Objects.requireNonNull(classComboBox.getSelectedItem())));
 
         //重置按钮
         resetButton = new JButton();
@@ -70,7 +70,7 @@ public class OrderMeal {
         carButton = new JButton();
         carButton.setFont(font);
         carButton.addActionListener(e -> {
-            customerDishesJTable.newFilter("");
+            customerDishesJTable.searchFieldFilter("");
             classComboBox.setSelectedItem("全部");
             ShoppingCar sC = new ShoppingCar(customerDishesJTable, client);
             sC.setLocationRelativeTo(searchTextField);

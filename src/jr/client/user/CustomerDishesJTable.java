@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.regex.PatternSyntaxException;
 
@@ -20,6 +21,7 @@ public class CustomerDishesJTable {
     private final TableRowSorter<MyTableModel> sorter;
     private final Vector<Vector<Object>> data = new Vector<>();
     private Dish[] dishes;
+    private RowFilter<MyTableModel, Object> classRowFilter;
 
     public static void main(String[] args) {
         CustomerDishesJTable customerDishesJTable = new CustomerDishesJTable();
@@ -73,17 +75,37 @@ public class CustomerDishesJTable {
         table.getColumnModel().getColumn(5).setCellEditor(spinnerEditor);
     }
 
-    public void newFilter(String word) {
-        if (word.equals("全部")) {
-            word = "";
-        }
+    public void searchFieldFilter(String word) {
+        //当过滤范围包含图片时 会导致结果出错?
         RowFilter<MyTableModel, Object> rf = null;
         try {
             rf = RowFilter.regexFilter(word);
         } catch (PatternSyntaxException e) {
             e.printStackTrace();
         }
-        sorter.setRowFilter(rf);
+        ArrayList<RowFilter<MyTableModel, Object>> andFilters = new ArrayList<>();
+        andFilters.add(rf);
+        if (this.classRowFilter != null)
+            andFilters.add(this.classRowFilter);
+        RowFilter<MyTableModel, Object> andFilter = RowFilter.andFilter(andFilters);
+        sorter.setRowFilter(andFilter);
+    }
+
+    public void classFilter(String word) {
+        if (word.equals("全部")) {
+            classRowFilter = null;
+            sorter.setRowFilter(null);
+            return;
+        }
+        classRowFilter = new RowFilter<>() {
+            @Override
+            public boolean include(Entry<? extends MyTableModel, ?> entry) {
+                MyTableModel model = entry.getModel();
+                String s = (String) model.getValueAt((int) entry.getIdentifier(), 4);
+                return s.equals(word);
+            }
+        };
+        sorter.setRowFilter(classRowFilter);
     }
 
     public void reset() {
