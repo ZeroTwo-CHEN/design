@@ -98,17 +98,19 @@ public class DataUtils {
     }
 
     public Dish[] showDishes(String word) {
-        if (word.equals(""))
+        if ("".equals(word)) {
             updateNumOfDishes();
-        else
+        } else {
             updateNumOfDishes(word);
+        }
         Dish[] result = new Dish[numOfDishes];
         try {
             String sql;
-            if (word.equals(""))
+            if ("".equals(word)) {
                 sql = "SELECT * FROM DISHES;";
-            else
+            } else {
                 sql = String.format("SELECT * FROM DISHES WHERE NAME GLOB '*%s*' OR CLASS GLOB '*%s*';", word, word);
+            }
             ps = sqLiteUtils.getStatement(sql);
             rs = ps.executeQuery();
             for (int i = 0; i < numOfDishes; i++) {

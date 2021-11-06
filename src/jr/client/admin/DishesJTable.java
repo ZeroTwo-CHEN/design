@@ -66,8 +66,9 @@ public class DishesJTable {
 
         TableUtils.dataLoadUtil(dishes, data);
 
-        if (!data.isEmpty())
+        if (!data.isEmpty()) {
             myTableModel.setDataVector(data, colName);
+        }
         table.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(buttonEditor);
         //myTableModel.fireTableStructureChanged();
@@ -133,7 +134,9 @@ class ButtonEditor extends DefaultCellEditor {
 
         deleteButton.addActionListener(e -> {
             int index = table.getTable().convertRowIndexToModel(table.getTable().getSelectedRow());
-            if (DataUtils.deleteDish(DishesJTable.dishes[index], panel)) DishesJTable.myTableModel.removeRow(index);
+            if (DataUtils.deleteDish(DishesJTable.dishes[index], panel)) {
+                DishesJTable.myTableModel.removeRow(index);
+            }
         });
 
         panel = new JPanel(layout);
