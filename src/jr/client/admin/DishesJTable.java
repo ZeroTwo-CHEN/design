@@ -66,7 +66,8 @@ public class DishesJTable {
 
         TableUtils.dataLoadUtil(dishes, data);
 
-        myTableModel.setDataVector(data, colName);
+        if (!data.isEmpty())
+            myTableModel.setDataVector(data, colName);
         table.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(buttonEditor);
         //myTableModel.fireTableStructureChanged();
@@ -77,7 +78,7 @@ public class DishesJTable {
     }
 
     public void classFilter(String word) {
-        classRowFilter=FilterUtil.classFilterUtil(sorter, word);
+        classRowFilter = FilterUtil.classFilterUtil(sorter, word);
     }
 
     public void updateTableData(int index, JPanel panel) {
