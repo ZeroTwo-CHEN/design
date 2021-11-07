@@ -35,6 +35,7 @@ public class ReadIdAndIP extends JFrame {
         // 点击 X 时调用 onCancel()
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }
@@ -80,9 +81,9 @@ public class ReadIdAndIP extends JFrame {
     }
 
     private boolean check() {
-        if (tableIdField.getText().trim().equals("")
-                || ipField.getText().trim().equals("")
-                || portField.getText().trim().equals("")) {
+        if ("".equals(tableIdField.getText().trim())
+                || "".equals(ipField.getText().trim())
+                || "".equals(portField.getText().trim())) {
             JOptionPane.showMessageDialog(contentPane, "信息不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
@@ -91,41 +92,50 @@ public class ReadIdAndIP extends JFrame {
 }
 
 class IPAddressFormatter extends DefaultFormatter {
+    @Override
     public String valueToString(Object value) throws ParseException {
-        if (!(value instanceof byte[] a))
+        if (!(value instanceof byte[] a)) {
             throw new ParseException("Not a byte[]", 0);
-        if (a.length != 4)
+        }
+        if (a.length != 4) {
             throw new ParseException("Length != 4", 0);
+        }
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 4; i++) {
             int b = a[i];
-            if (b < 0)
+            if (b < 0) {
                 b += 256;
+            }
             builder.append(b);
-            if (i < 3)
+            if (i < 3) {
                 builder.append('.');
+            }
         }
         return builder.toString();
     }
 
+    @Override
     public Object stringToValue(String text) throws ParseException {
         StringTokenizer tokenizer = new StringTokenizer(text, ".");
         byte[] a = new byte[4];
         for (int i = 0; i < 4; i++) {
             int b;
-            if (!tokenizer.hasMoreTokens())
+            if (!tokenizer.hasMoreTokens()) {
                 throw new ParseException("Too few bytes", 0);
+            }
             try {
                 b = Integer.parseInt(tokenizer.nextToken());
             } catch (NumberFormatException e) {
                 throw new ParseException("Not an integer", 0);
             }
-            if (b < 0 || b >= 256)
+            if (b < 0 || b >= 256) {
                 throw new ParseException("Byte out of range", 0);
+            }
             a[i] = (byte) b;
         }
-        if (tokenizer.hasMoreTokens())
+        if (tokenizer.hasMoreTokens()) {
             throw new ParseException("Too many bytes", 0);
+        }
         return a;
     }
 }
@@ -133,6 +143,7 @@ class IPAddressFormatter extends DefaultFormatter {
 //自定义一个DocumentFilter类
 class IntFilter extends DocumentFilter {
     //重载insertString方法
+    @Override
     public void insertString(FilterBypass fb, int offset, String string,
                              AttributeSet attr) throws BadLocationException {
         StringBuilder builder = changeString(string);
@@ -155,6 +166,7 @@ class IntFilter extends DocumentFilter {
     }
 
     //重载replace方法
+    @Override
     public void replace(FilterBypass fb, int offset, int length, String string,
                         AttributeSet attr) throws BadLocationException {
         if (string != null) {

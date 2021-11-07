@@ -34,6 +34,7 @@ public class DetailPanel extends JDialog {
         // 点击 X 时调用 onCancel()
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }
@@ -62,11 +63,20 @@ public class DetailPanel extends JDialog {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 18);
         infoPanel = new JPanel(new GridLayout(1, 4));
-        infoPanel.add(new JLabel("桌号"));
-        infoPanel.add(new JLabel(String.valueOf(order.getTableId())));
-        infoPanel.add(new JLabel("订单时间"));
-        infoPanel.add(new JLabel(order.getDate()));
+        JLabel textLabel1 = new JLabel("桌号：");
+        JLabel idLabel = new JLabel(String.valueOf(order.getTableId()));
+        JLabel textLabel2 = new JLabel("订单提交时间：");
+        JLabel timeLabel = new JLabel(order.getDate());
+        textLabel1.setFont(font);
+        idLabel.setFont(font);
+        textLabel2.setFont(font);
+        timeLabel.setFont(font);
+        infoPanel.add(textLabel1);
+        infoPanel.add(idLabel);
+        infoPanel.add(textLabel2);
+        infoPanel.add(timeLabel);
 
         String[] columnNames = {"ID", "菜名", "数量"};
 

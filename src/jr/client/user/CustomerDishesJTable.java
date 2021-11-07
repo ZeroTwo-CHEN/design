@@ -75,7 +75,9 @@ public class CustomerDishesJTable {
     }
 
     public void reset() {
-        for (int i = 0; i < table.getRowCount(); i++) table.setValueAt(0, i, 5);
+        for (int i = 0; i < table.getRowCount(); i++) {
+            table.setValueAt(0, i, 5);
+        }
     }
 
     public JTable getTable() {

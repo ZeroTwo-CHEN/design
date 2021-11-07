@@ -24,8 +24,11 @@ public class LogPanel extends StreamHandler {
         });
     }
 
+    @Override
     public void publish(LogRecord record) {
-        if (!textArea.isVisible()) return;
+        if (!textArea.isVisible()) {
+            return;
+        }
         super.publish(record);
         flush();
     }

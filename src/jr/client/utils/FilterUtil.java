@@ -19,15 +19,16 @@ public class FilterUtil {
         }
         ArrayList<RowFilter<MyTableModel, Object>> andFilters = new ArrayList<>();
         andFilters.add(rf);
-        if (classRowFilter != null)
+        if (classRowFilter != null) {
             andFilters.add(classRowFilter);
+        }
         RowFilter<MyTableModel, Object> andFilter = RowFilter.andFilter(andFilters);
         sorter.setRowFilter(andFilter);
     }
 
     public static RowFilter<MyTableModel, Object> classFilterUtil(TableRowSorter<MyTableModel> sorter,
                                                                   String word) {
-        if (word.equals("全部")) {
+        if ("全部".equals(word)) {
             sorter.setRowFilter(null);
             return null;
         }
