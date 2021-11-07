@@ -68,8 +68,4 @@ public class SQLiteUtils {
             e.printStackTrace();
         }
     }
-
-    public static void main(String... a) {
-        SQLiteUtils s = new SQLiteUtils();
-    }
 }
