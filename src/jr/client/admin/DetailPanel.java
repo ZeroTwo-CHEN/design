@@ -84,7 +84,7 @@ public class DetailPanel extends JDialog {
 
         int i = 0;
         for (Map.Entry<Dish, Integer> entry : order.getDishNumTreeMap().entrySet()) {
-            data[i][0] = order.getTableId();
+            data[i][0] = entry.getKey().getId();
             data[i][1] = entry.getKey().getName();
             data[i++][2] = entry.getValue();
         }
