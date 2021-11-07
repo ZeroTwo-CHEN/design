@@ -1,5 +1,6 @@
 package jr.client.admin;
 
+import jr.client.renderer.NumberCellRenderer;
 import jr.client.utils.FilterUtil;
 import jr.client.utils.TableUtils;
 import jr.jdbc.DataUtils;
@@ -17,6 +18,7 @@ public class DishesJTable {
     static MyTableModel myTableModel;
     private final DataUtils dataUtils;
     private final Vector<String> colName;
+    private final NumberCellRenderer numberCellRenderer;
     private final ButtonEditor buttonEditor;
     private final ButtonRenderer buttonRenderer;
     private final TableRowSorter<MyTableModel> sorter;
@@ -45,6 +47,7 @@ public class DishesJTable {
         dataUtils = new DataUtils();
         myTableModel = new MyTableModel();
         table = new JTable(myTableModel);
+        numberCellRenderer = new NumberCellRenderer();
         buttonEditor = new ButtonEditor(this);
         buttonRenderer = new ButtonRenderer();
         sorter = new TableRowSorter<>(myTableModel);
@@ -69,6 +72,8 @@ public class DishesJTable {
         if (!data.isEmpty()) {
             myTableModel.setDataVector(data, colName);
         }
+        table.getColumnModel().getColumn(3).setCellRenderer(numberCellRenderer);
+        table.getColumnModel().getColumn(0).setCellRenderer(numberCellRenderer);
         table.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(buttonEditor);
         //myTableModel.fireTableStructureChanged();

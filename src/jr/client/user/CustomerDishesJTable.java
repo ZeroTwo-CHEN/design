@@ -1,5 +1,6 @@
 package jr.client.user;
 
+import jr.client.renderer.NumberCellRenderer;
 import jr.client.utils.FilterUtil;
 import jr.client.utils.TableUtils;
 import jr.jdbc.DataUtils;
@@ -16,6 +17,7 @@ public class CustomerDishesJTable {
     private final JTable table;
     static MyTableModel myTableModel;
     private final Vector<String> colName;
+    private final NumberCellRenderer numberCellRenderer;
     private final SpinnerEditor spinnerEditor;
     private final SpinnerRenderer spinnerRenderer;
     private final TableRowSorter<MyTableModel> sorter;
@@ -43,17 +45,13 @@ public class CustomerDishesJTable {
         colName.add("数量");
         myTableModel = new MyTableModel();
         table = new JTable(myTableModel);
+        numberCellRenderer = new NumberCellRenderer();
         spinnerEditor = new SpinnerEditor();
         spinnerRenderer = new SpinnerRenderer();
         sorter = new TableRowSorter<>(myTableModel);
         table.setRowSorter(sorter);
         table.setRowHeight(100);
         table.setRowSelectionAllowed(false);
-
-//        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-//        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-//        table.getColumnModel().getColumn(2).setCellRenderer(renderer);
-
         init();
     }
 
@@ -62,6 +60,8 @@ public class CustomerDishesJTable {
         dishes = dataUtils.showDishes("");
         TableUtils.dataLoadUtil(dishes, data);
         myTableModel.setDataVector(data, colName);
+        table.getColumnModel().getColumn(3).setCellRenderer(numberCellRenderer);
+        table.getColumnModel().getColumn(0).setCellRenderer(numberCellRenderer);
         table.getColumnModel().getColumn(5).setCellRenderer(spinnerRenderer);
         table.getColumnModel().getColumn(5).setCellEditor(spinnerEditor);
     }

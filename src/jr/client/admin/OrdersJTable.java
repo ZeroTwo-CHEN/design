@@ -1,5 +1,6 @@
 package jr.client.admin;
 
+import jr.client.renderer.NumberCellRenderer;
 import jr.model.Order;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class OrdersJTable {
     private final JTable table;
     private final OrdersTableModel tableModel;
     private final Vector<String> colName;
+    private final NumberCellRenderer numberCellRenderer;
     private final OperationRenderer operationRenderer;
     private final OperationEditor operationEditor;
     private final Vector<Vector<Object>> data = new Vector<>();
@@ -29,6 +31,7 @@ public class OrdersJTable {
         colName.add("操作");
         tableModel = new OrdersTableModel();
         table = new JTable(tableModel);
+        numberCellRenderer = new NumberCellRenderer();
         operationRenderer = new OperationRenderer();
         operationEditor = new OperationEditor(this);
         table.setRowHeight(50);
@@ -62,6 +65,8 @@ public class OrdersJTable {
         }
 
         tableModel.setDataVector(data, colName);
+        table.getColumnModel().getColumn(1).setCellRenderer(numberCellRenderer);
+        table.getColumnModel().getColumn(0).setCellRenderer(numberCellRenderer);
         table.getColumnModel().getColumn(3).setCellRenderer(operationRenderer);
         table.getColumnModel().getColumn(3).setCellEditor(operationEditor);
     }
