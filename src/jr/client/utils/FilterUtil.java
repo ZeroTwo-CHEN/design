@@ -11,14 +11,21 @@ public class FilterUtil {
     public static void searchFieldFilterUtil(TableRowSorter<MyTableModel> sorter,
                                              RowFilter<MyTableModel, Object> classRowFilter,
                                              String word) {
-        RowFilter<MyTableModel, Object> rf = null;
+        RowFilter<MyTableModel, Object> nameRf = null;
+        RowFilter<MyTableModel, Object> idRf = null;
         try {
-            rf = RowFilter.regexFilter(word, 0, 2);//只过滤id和菜名两列
+            nameRf = RowFilter.regexFilter(word, 2);//只过滤id和菜名两列
+            idRf = RowFilter.regexFilter("^" + word + "$", 0);
         } catch (PatternSyntaxException e) {
             e.printStackTrace();
         }
+        ArrayList<RowFilter<MyTableModel, Object>> orFilters = new ArrayList<>();
+        orFilters.add(nameRf);
+        orFilters.add(idRf);
+        RowFilter<MyTableModel, Object> orFilter = RowFilter.orFilter(orFilters);
+
         ArrayList<RowFilter<MyTableModel, Object>> andFilters = new ArrayList<>();
-        andFilters.add(rf);
+        andFilters.add(orFilter);
         if (classRowFilter != null) {
             andFilters.add(classRowFilter);
         }
