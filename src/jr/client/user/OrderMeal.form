@@ -31,7 +31,7 @@
                 <constraints/>
                 <properties>
                   <autoCreateRowSorter value="false"/>
-                  <font name="Microsoft YaHei UI" size="14" style="0"/>
+                  <font name="Microsoft YaHei UI" size="16" style="0"/>
                   <foreground color="-16777216"/>
                 </properties>
               </component>

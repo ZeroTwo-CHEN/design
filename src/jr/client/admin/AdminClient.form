@@ -129,6 +129,8 @@
                   <component id="6f6c5" class="javax.swing.JTextArea" binding="logArea" custom-create="true">
                     <constraints/>
                     <properties>
+                      <editable value="true"/>
+                      <enabled value="true"/>
                       <font name="Microsoft YaHei" size="18" style="0"/>
                     </properties>
                   </component>

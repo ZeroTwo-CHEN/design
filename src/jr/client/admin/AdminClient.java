@@ -36,7 +36,7 @@ public class AdminClient {
             public void mouseClicked(MouseEvent e) {
                 try {
                     Desktop.getDesktop().browse(
-                            new URL("https://github.com/ZeroTwo-CHEN/design").toURI());
+                            new URL("https://gitee.com/ZeroTwo-CHEN/design").toURI());
                 } catch (URISyntaxException | IOException ex) {
                     ex.printStackTrace();
                 }
@@ -46,7 +46,7 @@ public class AdminClient {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("AdminClient");
+            JFrame frame = new JFrame("管理端");
             frame.setContentPane(new AdminClient().root);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(700, 600);

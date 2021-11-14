@@ -21,7 +21,7 @@ public class OrderMeal {
         client = new Client();
 
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("OrderMeal");
+            JFrame frame = new JFrame("客户端");
             frame.setContentPane(new OrderMeal().root);
 
             frame.addWindowListener(new WindowAdapter() {
