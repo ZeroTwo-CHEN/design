@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class AdminClient {
@@ -29,6 +31,7 @@ public class AdminClient {
     private JComboBox<String> classComboBox;
     private JTextField numOfOrdersField;
     private JTextField numOfClientsField;
+    private JTextField timeField;
 
     public AdminClient() {
         urlLabel.addMouseListener(new MouseAdapter() {
@@ -56,8 +59,8 @@ public class AdminClient {
 
     private void createUIComponents() {
         //实时订单面板
-        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 18);
-        statusPanel = new JPanel(new GridLayout(1, 4));
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 16);
+        statusPanel = new JPanel(new GridLayout(1, 6));
         JLabel numOfOrdersLabel = new JLabel("当前订单数：");
         numOfOrdersLabel.setFont(font);
         statusPanel.add(numOfOrdersLabel);
@@ -68,10 +71,22 @@ public class AdminClient {
         numOfClientsField.setFont(font);
         statusPanel.add(numOfOrdersField);
         numOfClientsField.setEditable(false);
-        JLabel numOfClientsLabel = new JLabel("当前在线客户端数：");
+        JLabel numOfClientsLabel = new JLabel("客户端数：");
         numOfClientsLabel.setFont(font);
         statusPanel.add(numOfClientsLabel);
         statusPanel.add(numOfClientsField);
+        JLabel timeLabel = new JLabel("时间：");
+        timeLabel.setFont(font);
+        statusPanel.add(timeLabel);
+        timeField = new JTextField("0");
+        timeField.setFont(font);
+        timeField.setEditable(false);
+        statusPanel.add(timeField);
+
+        //时间
+        Timer timer = new Timer(1000, e ->
+                timeField.setText(new SimpleDateFormat("HH:mm").format(new Date())));
+        timer.start();
 
         OrdersJTable ordersJTable = new OrdersJTable();
         orderTable = ordersJTable.getTable();
