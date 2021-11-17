@@ -59,7 +59,9 @@ public class CustomerDishesJTable {
         DataUtils dataUtils = new DataUtils();
         dishes = dataUtils.showDishes("");
         TableUtils.dataLoadUtil(dishes, data);
-        myTableModel.setDataVector(data, colName);
+        if (!data.isEmpty()) {
+            myTableModel.setDataVector(data, colName);
+        }
         table.getColumnModel().getColumn(3).setCellRenderer(numberCellRenderer);
         table.getColumnModel().getColumn(0).setCellRenderer(numberCellRenderer);
         table.getColumnModel().getColumn(5).setCellRenderer(spinnerRenderer);
@@ -71,7 +73,7 @@ public class CustomerDishesJTable {
     }
 
     public void classFilter(String word) {
-        classRowFilter=FilterUtil.classFilterUtil(sorter, word);
+        classRowFilter = FilterUtil.classFilterUtil(sorter, word);
     }
 
     public void reset() {

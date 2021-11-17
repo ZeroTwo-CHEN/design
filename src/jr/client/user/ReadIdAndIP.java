@@ -17,11 +17,9 @@ public class ReadIdAndIP extends JFrame {
     private JFormattedTextField ipField;
     private JFormattedTextField portField;
     private final Client client;
-    private final JFrame frame;
 
-    public ReadIdAndIP(Client client, JFrame frame) {
+    public ReadIdAndIP(Client client) {
         this.client = client;
-        this.frame = frame;
 
         setContentPane(contentPane);
         //setModal(true);
@@ -52,8 +50,24 @@ public class ReadIdAndIP extends JFrame {
                     ipField.getText(),
                     Math.toIntExact((Long) tableIdField.getValue()))) {
                 //已保存client.setId(Math.toIntExact((Long) tableIdField.getValue()));
-                frame.setVisible(true);
                 dispose();
+
+                SwingUtilities.invokeLater(() -> {
+                    JFrame frame = new JFrame("客户端");
+                    frame.setContentPane(new OrderMeal().getRoot());
+
+                    frame.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            super.windowClosing(e);
+                            client.logout();
+                        }
+                    });
+
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.setSize(700, 600);
+                    frame.setVisible(true);
+                });
             } else {
                 JOptionPane.showMessageDialog(contentPane, "该桌号已被注册", "提示", JOptionPane.INFORMATION_MESSAGE);
             }
